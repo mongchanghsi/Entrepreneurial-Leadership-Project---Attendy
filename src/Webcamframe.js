@@ -11,6 +11,7 @@ class Test extends Component {
 
     this.state = {};
     this.capture = this.capture.bind(this);
+    this.endSession =  this.endSession.bind(this);
   }
 
   setRef = webcam => {
@@ -35,9 +36,31 @@ class Test extends Component {
       document.getElementById("ocr_results").innerText = text;
       document.getElementById("ocr_status").innerText = 'Completed';
       await worker.terminate();
+
+      var text2 = text.split(" ");
+      console.log(text2);
+      var i;
+      var max_string = '';
+      for (i=0; i < text2.length; i++){
+        if(text2[i].length > max_string.length){
+          max_string = text2[i];
+        }
+      }
+
+      console.log(max_string);
+
+      if(max_string.length < 10){
+        document.getElementById("ocr_status").innerText = "Error";
+        document.getElementById("ocr_results").innerText = "Unable to read result, please try again";
+      }
+
     })();
 
   };
+
+  endSession(){
+    console.log("Session Ended");
+  }
 
   render(){
     return(
@@ -99,6 +122,14 @@ class Test extends Component {
         <div className="row">
           <div className="col btn-center">
             <button className="btn btn-primary btn-lg" onClick={this.capture}> Run OCR </button>
+          </div>
+        </div>
+
+        <br/>
+        
+        <div className="row">
+          <div className="col btn-center">
+            <button className="btn btn-primary btn-lg" onClick={this.endSession}> End Session </button>
           </div>
         </div>
       </div>
