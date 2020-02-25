@@ -37,6 +37,7 @@ class Webcamframe extends Component {
           console.log(result);
           var tdata = JSON.parse(result);
           this.setState({data: tdata.csvFormat});
+          console.log(this.state.data)
         })
         .catch(error => console.log('error', error));
 
@@ -70,7 +71,7 @@ class Webcamframe extends Component {
     var showCSVBtn = this.state.showCSV ?
         <div className="row">
           <div className="col btn-center">
-            <CSVLink data={this.state.data} headers={this.state.headers} className="btn btn-primary" filename={"attendance-file.csv"}> Download Excel </CSVLink>
+            {this.state.data.length ? <CSVLink data={this.state.data} headers={this.state.headers} className="btn btn-primary">Download Attendance List</CSVLink> : null}
           </div>
         </div> : '';
 
