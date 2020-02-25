@@ -114,3 +114,7 @@ button:disabled{
   height: 500px;
   width: 800px;
 }
+
+.red-text{
+  color: red;
+}

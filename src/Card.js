@@ -36,11 +36,12 @@ class Card extends Component {
     event.preventDefault();
     console.log(this.state);
 
-    // call api
+    // call login api
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
 
-    var raw = JSON.stringify({"userId":"X12345", "password":"password123"});
+    var raw = JSON.stringify({"userId":this.state.username, "password":this.state.password});
+    console.log(this.state);
 
     var requestOptions = {
       method: 'POST',
@@ -59,12 +60,17 @@ class Card extends Component {
 
         if (this.state.authority === "student"){
           // redirect to the student page
-          this.props.history.push("/Tapage1")
+          console.log('redirect to the student page');
+          document.getElementById("catcherror").innerText = "Student Portal is not ready yet"
         } else if (this.state.authority === "faculty"){
-          console.log("redirect to the ta page")
+          // redirect to the lesson page
+          this.props.history.push("/Tapage1")
         };
       })
-      .catch(error => console.log('error', error));
+      .catch(error => {
+        console.log('error', error);
+        document.getElementById("catcherror").innerText = "Incorrect username or password";
+      });
   }
 
   render(){
@@ -84,6 +90,8 @@ class Card extends Component {
                 <label> Password </label>
                 <input type="password" className="form-control" name="password" onChange={this.onChange}/>
               </div>
+
+              <div><small id="catcherror" className="red-text"> </small></div>
 
               <button className="btn btn-primary" onClick={this.onSubmit}> Log in </button>
               <br/>

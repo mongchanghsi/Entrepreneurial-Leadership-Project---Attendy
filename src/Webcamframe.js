@@ -1,140 +1,90 @@
 import React, { Component } from 'react';
-import Navbar from './Navbar';
 import './App.css';
-import { createWorker } from 'tesseract.js';
-import Webcam from 'react-webcam';
+import Navbar from './Navbar';
+import Webcamcom from './Webcamcom';
+import { CSVLink } from "react-csv";
 
-class Test extends Component {
-
+class Webcamframe extends Component {
   constructor(props){
     super(props);
 
-    this.state = {};
-    this.capture = this.capture.bind(this);
-    this.endSession =  this.endSession.bind(this);
+    this.state = {
+      showWebcam: true,
+      showEndSession: true,
+      showCSV: false,
+      data: [],
+    };
+    this.endSession = this.endSession.bind(this);
   }
 
-  setRef = webcam => {
-    this.webcam = webcam;
-  };
-
-  capture() {
-    const imgSrc = this.webcam.getScreenshot();
-    const img = document.getElementById('imageele');
-    img.src = imgSrc
-
-    const worker = createWorker({
-    logger: m => console.log(m)
-    });
-
-    (async () => {
-      await worker.load();
-      await worker.loadLanguage('eng');
-      await worker.initialize('eng');
-      const { data: { text } } = await worker.recognize(img.src);
-      console.log(text);
-      document.getElementById("ocr_results").innerText = text;
-      document.getElementById("ocr_status").innerText = 'Completed';
-      await worker.terminate();
-
-      var text2 = text.split(" ");
-      console.log(text2);
-      var i;
-      var max_string = '';
-      for (i=0; i < text2.length; i++){
-        if(text2[i].length > max_string.length){
-          max_string = text2[i];
-        }
-      }
-
-      console.log(max_string);
-
-      if(max_string.length < 10){
-        document.getElementById("ocr_status").innerText = "Error";
-        document.getElementById("ocr_results").innerText = "Unable to read result, please try again";
-      }
-
-    })();
-
-  };
-
   endSession(){
-    console.log("Session Ended");
+    console.log('session has ended');
+
+    // aggregate the data
+    var requestOptions = {
+        method: 'GET',
+        redirect: 'follow'
+      };
+
+      fetch("https://attendy-geofi.herokuapp.com/attendance/aggregate?lessonName=class%201\n", requestOptions)
+        .then(response => response.text())
+        .then(result => {
+          console.log(result);
+          var data = JSON.parse(result);
+          this.setState({ data: data.csvFormat});
+        })
+        .catch(error => console.log('error', error));
+
+    this.setState({ showWebcam: false});
+    this.setState({ showEndSession: false});
+    this.setState({ showCSV: true});
+
+    var requestOptions = {
+      method: 'PUT',
+      redirect: 'follow'
+    };
+
+    fetch("https://attendy-geofi.herokuapp.com/lesson/status?subjectName=Entrepreneurial%20Leadership&lessonName=class%201&status=finished", requestOptions)
+      .then(response => response.text())
+      .then(result => {
+        console.log(result);
+      })
+      .catch(error => console.log('error', error));
+
   }
 
   render(){
+    var showWebcam = this.state.showWebcam ? <Webcamcom/> : '';
+    var showEndSessionBtn = this.state.showEndSession ?
+      <div className="row">
+        <div className="col btn-center">
+          <button className="btn btn-primary btn-lg" onClick={this.endSession}> End Session </button>
+        </div>
+      </div> : '';
+
+    var mindblow = [
+          { name: "glenn", userId: "X12345", status: "punctual" }
+        ];
+
+    var mindblow2 = this.state.data
+
+    var showCSVBtn = this.state.showCSV ?
+        <div className="row">
+          <div className="col btn-center">
+            <CSVLink data={this.state.data} className="btn btn-primary" filename={"attendance-file.csv"}> Download Excel </CSVLink>
+          </div>
+        </div> : '';
+
     return(
       <div>
         <Navbar/>
+        { showWebcam }
         <br/>
-        <div className="row">
-          <div className="col-1">
-          </div>
-          <div className="col-4 btn-center">
-            <h2> Video Input </h2>
-          </div>
-          <div className="col-2">
-          </div>
-          <div className="col-4 btn-center">
-            <h2> Snapshot </h2>
-          </div>
-        </div>
-        <br/>
-        <div className="row">
-          <div className="col btn-center">
-            <Webcam
-              audio={false}
-              ref={this.setRef}
-              height={500}
-              width={800}
-              screenshotFormat="image/png"/>
-          </div>
-
-          <div className="col btn-center">
-            <img id="imageele" src="" className="imgstyle"/>
-          </div>
-        </div>
-
-        <div className="row">
-          <div className="col-1">
-          </div>
-
-          <div className="col-4 btn-center">
-            <h4> Status </h4>
-          </div>
-          <div className="col-2">
-          </div>
-          <div className="col-4 btn-center">
-            <h4> Output </h4>
-          </div>
-        </div>
-
-        <div className="row">
-          <div className="col btn-center">
-            <div id="ocr_status"> </div>
-          </div>
-
-          <div className="col btn-center">
-            <div id="ocr_results"> </div>
-          </div>
-        </div>
-
-        <div className="row">
-          <div className="col btn-center">
-            <button className="btn btn-primary btn-lg" onClick={this.capture}> Run OCR </button>
-          </div>
-        </div>
-
-        <br/>
-        
-        <div className="row">
-          <div className="col btn-center">
-            <button className="btn btn-primary btn-lg" onClick={this.endSession}> End Session </button>
-          </div>
-        </div>
+        { showEndSessionBtn }
+        { showCSVBtn }
       </div>
     );
   }
 }
 
-export default Test;
+export default Webcamframe;

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Navbar from './Navbar';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import Webcamframe from './Webcamframe';
 
 class Tapage1 extends Component {
@@ -68,9 +68,7 @@ class Tapage1 extends Component {
             </div>
 
             <div className="col-4">
-              <Link to="/Webcamframe">
-                <button className="btn btn-primary btn-lg btn-block"> 28th February 2020 </button>
-              </Link>
+              <Link to="/Webcamframe"><button className="btn btn-primary btn-lg btn-block"> 28th February 2020 </button></Link>
             </div>
 
             <div className="col-1">
