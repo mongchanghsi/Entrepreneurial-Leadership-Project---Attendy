@@ -9,12 +9,7 @@ class Webcamcom extends Component {
   constructor(props){
     super(props);
 
-    this.state = {
-      name: '',
-      userid: '',
-      lessonName: this.props.lessonName
-    };
-
+    this.state = {};
     this.capture = this.capture.bind(this);
     this.changeLate = this.changeLate.bind(this);
     this.changeStart = this.changeStart.bind(this);
@@ -38,25 +33,23 @@ class Webcamcom extends Component {
       await worker.load();
       await worker.loadLanguage('eng');
       await worker.initialize('eng');
-      const { data: { text } } = await worker.recognize(img.src);
+      const { data: { text, lines } } = await worker.recognize(img.src);
       console.log(text);
-      document.getElementById("ocr_results").innerText = text;
+      console.log(lines);
+      var txtName = new Array();
+      var txtID = new Array();
+      for ( var i = 0; i < lines.length; i++ ) {
+        if ( lines[i].text.match(/303/g) ) {
+          txtID.push(lines[i].text)
+        }
+        // if
+      }
+
+      document.getElementById("ocr_results").innerText = txtID;
       document.getElementById("ocr_status").innerText = 'Completed';
       await worker.terminate();
 
-      var text2 = text.split(" ");
-      console.log(text2);
-      var i;
-      var max_string = '';
-      for (i=0; i < text2.length; i++){
-        if(text2[i].length > max_string.length){
-          max_string = text2[i];
-        }
-      }
-
-      console.log(max_string);
-
-      if(max_string.length < 10){
+      if(txtID.length == 0){
         document.getElementById("ocr_status").innerText = "Error";
         document.getElementById("ocr_results").innerText = "Unable to read result, please try again";
       }
@@ -64,10 +57,11 @@ class Webcamcom extends Component {
       var myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/json");
 
-      var raw = JSON.stringify({    "userName": "glenn",
-                                    "berkeleyId": "3123124124312321",
+      var raw = JSON.stringify({    "userName": " ",
+                                    "berkeleyId": txtID,
                                     "subjectName": "Entrepreneurial Leadership",
                                     "lessonName": "class 1"});
+      console.log("raw", raw)
 
       var requestOptions = {
         method: 'POST',
@@ -159,8 +153,8 @@ class Webcamcom extends Component {
             <Webcam
               audio={false}
               ref={this.setRef}
-              height={500}
-              width={800}
+              height={250}
+              width={400}
               screenshotFormat="image/png"/>
           </div>
 
