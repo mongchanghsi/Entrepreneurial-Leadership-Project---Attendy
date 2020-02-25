@@ -68,7 +68,7 @@ class Tapage1 extends Component {
             </div>
 
             <div className="col-4">
-              <Link to="/Webcamframe"><button className="btn btn-primary btn-lg btn-block"> 28th February 2020 </button></Link>
+              <Link to="/Webcamframe"><button className="btn btn-primary btn-lg btn-block" id="class6"> 28th February 2020 </button></Link>
             </div>
 
             <div className="col-1">
@@ -83,14 +83,14 @@ class Tapage1 extends Component {
             </div>
 
             <div className="col-4">
-              <button className="btn btn-primary btn-lg btn-block"> 6th March 2020 </button>
+              <button className="btn btn-primary btn-lg btn-block" id="class7"> 6th March 2020 </button>
             </div>
 
             <div className="col-2">
             </div>
 
             <div className="col-4">
-              <button className="btn btn-primary btn-lg btn-block"> 13th March 2020 </button>
+              <button className="btn btn-primary btn-lg btn-block" id="class8"> 13th March 2020 </button>
             </div>
 
             <div className="col-1">
@@ -105,14 +105,14 @@ class Tapage1 extends Component {
             </div>
 
             <div className="col-4">
-              <button className="btn btn-primary btn-lg btn-block"> 3rd April 2020 </button>
+              <button className="btn btn-primary btn-lg btn-block" id="class9"> 3rd April 2020 </button>
             </div>
 
             <div className="col-2">
             </div>
 
             <div className="col-4">
-              <button className="btn btn-primary btn-lg btn-block"> 10th April 2020 </button>
+              <button className="btn btn-primary btn-lg btn-block" id="class10"> 10th April 2020 </button>
             </div>
 
             <div className="col-1">

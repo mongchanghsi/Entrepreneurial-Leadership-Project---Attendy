@@ -71,6 +71,7 @@ class Webcamcom extends Component {
         redirect: 'follow'
       };
 
+      // everytime when clicking the Run OCR, it will post the attendance to the back-end
       fetch("https://attendy-geofi.herokuapp.com/attendance/submission", requestOptions)
         .then(response => response.text())
         .then(result => {
@@ -83,6 +84,7 @@ class Webcamcom extends Component {
 
   };
 
+  // changing the status to active / punctual, so that the subsequent entry are considered punctual
   changeStart(){
     var requestOptions = {
       method: 'PUT',
@@ -94,10 +96,12 @@ class Webcamcom extends Component {
       .then(result => {
         console.log(result);
         console.log('successfully start the attendance');
+        document.getElementById("attendance_status").innerText = "Punctual"
       })
       .catch(error => console.log('error', error));
   }
 
+  // changing the class status to late, so that the subsequent entry are considered late
   changeLate(){
     var requestOptions = {
         method: 'PUT',
@@ -106,10 +110,14 @@ class Webcamcom extends Component {
 
       fetch("https://attendy-geofi.herokuapp.com/lesson/status?subjectName=Entrepreneurial%20Leadership&lessonName=class%201&status=late", requestOptions)
         .then(response => response.text())
-        .then(result => console.log(result))
+        .then(result => {
+          console.log(result);
+          document.getElementById("attendance_status").innerText = "Late"
+        })
         .catch(error => console.log('error', error));
   }
 
+  // checking the status of the class - not using
   checkStatus(){
     var requestOptions = {
       method: 'GET',
@@ -161,12 +169,12 @@ class Webcamcom extends Component {
           </div>
 
           <div className="col-4 btn-center">
-            <h4> Status </h4>
+            <h4> Scanning Status </h4>
           </div>
           <div className="col-2">
           </div>
           <div className="col-4 btn-center">
-            <h4> Output </h4>
+            <h4> Scanning Output </h4>
           </div>
         </div>
 
@@ -180,6 +188,16 @@ class Webcamcom extends Component {
           </div>
         </div>
 
+        <br/>
+
+        <div className="row">
+          <div className="col btn-center">
+            <div id="attendance_status"></div>
+          </div>
+        </div>
+
+        <br/>
+
         <div className="row">
           <div className="col btn-center">
             <button className="btn btn-primary btn-lg" onClick={this.capture}> Run OCR </button>
@@ -188,17 +206,9 @@ class Webcamcom extends Component {
           <div className="col btn-center">
             <button className="btn btn-primary btn-lg" onClick={this.changeStart}> Start Attendance </button>
           </div>
-        </div>
 
-        <br/>
-
-        <div className="row">
           <div className="col btn-center">
             <button className="btn btn-primary btn-lg" onClick={this.changeLate}> Late Attendance </button>
-          </div>
-
-          <div className="col btn-center">
-            <button className="btn btn-primary btn-lg" onClick={this.checkStatus}> check Status </button>
           </div>
         </div>
 

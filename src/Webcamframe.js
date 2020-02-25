@@ -12,7 +12,12 @@ class Webcamframe extends Component {
       showWebcam: true,
       showEndSession: true,
       showCSV: false,
-      data: []
+      data: [],
+      headers: [
+        {label: "Name", key: "name"},
+        {label: "Student ID", key: "userId"},
+        {label: "Status", key: "status"}
+      ]
     };
     this.endSession = this.endSession.bind(this);
   }
@@ -30,13 +35,8 @@ class Webcamframe extends Component {
         .then(response => response.text())
         .then(result => {
           console.log(result);
-          var data = JSON.parse(result);
-          this.setState({ data: data.csvFormat});
-          console.log('this.state');
-          console.log(this.state);
-          console.log('this.state.data');
-          console.log(this.state.data[0]);
-          console.log(typeof(this.state.data));
+          var tdata = JSON.parse(result);
+          this.setState({data: tdata.csvFormat});
         })
         .catch(error => console.log('error', error));
 
@@ -67,16 +67,10 @@ class Webcamframe extends Component {
         </div>
       </div> : '';
 
-    var mindblow = [
-          { name: "glenn", userId: "X12345", status: "punctual" }
-        ];
-
-    var mindblow2 = this.state.data
-
     var showCSVBtn = this.state.showCSV ?
         <div className="row">
           <div className="col btn-center">
-            <CSVLink data={this.state.data} className="btn btn-primary" filename={"attendance-file.csv"}> Download Excel </CSVLink>
+            <CSVLink data={this.state.data} headers={this.state.headers} className="btn btn-primary" filename={"attendance-file.csv"}> Download Excel </CSVLink>
           </div>
         </div> : '';
 
