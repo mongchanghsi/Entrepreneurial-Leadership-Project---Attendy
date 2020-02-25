@@ -70,7 +70,7 @@ class Tapage1 extends Component {
             <div className="col-4">
               <Link to={{
                 pathname: '/Webcamframe',
-                state: { date: '28th February 2020', lessonName:"class1"}
+                state: { date: '28th February 2020', lessonName:"class 1"}
               }}><button className="btn btn-primary btn-lg btn-block" id="class1"> 28th February 2020 </button></Link>
             </div>
 
@@ -88,7 +88,7 @@ class Tapage1 extends Component {
             <div className="col-4">
               <Link to={{
                 pathname: '/Webcamframe',
-                state: { date: '6th March 2020', lessonName:"class2"}
+                state: { date: '6th March 2020', lessonName:"class 2"}
               }}><button className="btn btn-primary btn-lg btn-block" id="class2"> 6th March 2020 </button></Link>
             </div>
 
@@ -98,7 +98,7 @@ class Tapage1 extends Component {
             <div className="col-4">
               <Link to={{
                 pathname: '/Webcamframe',
-                state: { date: '13th March 2020', lessonName:'class3'}
+                state: { date: '13th March 2020', lessonName:'class 3'}
               }}><button className="btn btn-primary btn-lg btn-block" id="class3"> 13th March 2020 </button></Link>
             </div>
 
@@ -116,7 +116,7 @@ class Tapage1 extends Component {
             <div className="col-4">
               <Link to={{
                 pathname: '/Webcamframe',
-                state: { date: '3rd April 2020', lessonName:'class4'}
+                state: { date: '3rd April 2020', lessonName:'class 4'}
               }}><button className="btn btn-primary btn-lg btn-block" id="class4"> 3rd April 2020 </button></Link>
             </div>
 
@@ -126,7 +126,7 @@ class Tapage1 extends Component {
             <div className="col-4">
               <Link to={{
                 pathname: '/Webcamframe',
-                state: { date: '10th April 2020', lessonName:'class5'}
+                state: { date: '10th April 2020', lessonName:'class 5'}
               }}><button className="btn btn-primary btn-lg btn-block" id="class5"> 10th April 2020 </button></Link>
             </div>
 

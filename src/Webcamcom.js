@@ -9,7 +9,10 @@ class Webcamcom extends Component {
   constructor(props){
     super(props);
 
-    this.state = {};
+    this.state = {
+      lessonName:'',
+      currentLessonNumber:''
+    };
     this.capture = this.capture.bind(this);
     this.changeLate = this.changeLate.bind(this);
     this.changeStart = this.changeStart.bind(this);
@@ -19,6 +22,17 @@ class Webcamcom extends Component {
   setRef = webcam => {
     this.webcam = webcam;
   };
+
+
+  componentDidMount(){
+    const lessonName = this.props.lessonName;
+    const currentLessonNumber = this.props.currentLessonNumber
+    this.setState({ lessonName: lessonName})
+    this.setState({ currentLessonNumber: currentLessonNumber})
+    console.log('this is from the webcamcom')
+    console.log(this.state.currentLessonNumber)
+    console.log('this is the end')
+  }
 
   capture() {
     const imgSrc = this.webcam.getScreenshot();
@@ -60,7 +74,7 @@ class Webcamcom extends Component {
       var raw = JSON.stringify({    "userName": " ",
                                     "berkeleyId": txtID,
                                     "subjectName": "Entrepreneurial Leadership",
-                                    "lessonName": "class 1"});
+                                    "lessonName": `${this.state.lessonName}`});
       console.log("raw", raw)
 
       var requestOptions = {
@@ -90,7 +104,7 @@ class Webcamcom extends Component {
       redirect: 'follow'
     };
 
-    fetch("https://attendy-geofi.herokuapp.com/lesson/status?subjectName=Entrepreneurial%20Leadership&lessonName=class%201&status=punctual", requestOptions)
+    fetch(`https://attendy-geofi.herokuapp.com/lesson/status?subjectName=Entrepreneurial%20Leadership&lessonName=class%${this.state.currentLessonNumber}&status=punctual`, requestOptions)
       .then(response => response.text())
       .then(result => {
         console.log(result);
@@ -107,7 +121,7 @@ class Webcamcom extends Component {
         redirect: 'follow'
       };
 
-      fetch("https://attendy-geofi.herokuapp.com/lesson/status?subjectName=Entrepreneurial%20Leadership&lessonName=class%201&status=late", requestOptions)
+      fetch(`https://attendy-geofi.herokuapp.com/lesson/status?subjectName=Entrepreneurial%20Leadership&lessonName=class%${this.state.currentLessonNumber}&status=late`, requestOptions)
         .then(response => response.text())
         .then(result => {
           console.log(result);
@@ -131,7 +145,6 @@ class Webcamcom extends Component {
 
   render(){
     // identify which class is this currently running at
-    var lessonName = this.props.lessonName;
     return(
       <div>
         <br/>

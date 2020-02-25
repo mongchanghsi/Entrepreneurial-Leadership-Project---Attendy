@@ -17,9 +17,27 @@ class Webcamframe extends Component {
         {label: "Name", key: "name"},
         {label: "Student ID", key: "userId"},
         {label: "Status", key: "status"}
-      ]
+      ],
+      lessonNumber: {
+        "class 1": "201",
+        "class 2": "202",
+        "class 3": "203",
+        "class 4": "204",
+        "class 5": "205"
+      },
+      currentLessonNumber: ''
     };
     this.endSession = this.endSession.bind(this);
+  }
+
+  componentDidMount(){
+    const { lessonName } = this.props.location.state;
+    const currentLessonNumber = this.state.lessonNumber[lessonName]
+    this.setState({ currentLessonNumber: currentLessonNumber })
+    console.log('this is from the webcamframe');
+    console.log(this.state.lessonNumber[lessonName])
+    console.log(this.state.currentLessonNumber);
+    console.log('end of the webcamframe')
   }
 
   endSession(){
@@ -31,7 +49,7 @@ class Webcamframe extends Component {
         redirect: 'follow'
       };
 
-      fetch("https://attendy-geofi.herokuapp.com/attendance/aggregate?lessonName=class%201\n", requestOptions)
+      fetch(`https://attendy-geofi.herokuapp.com/attendance/aggregate?lessonName=class%${this.state.currentLessonNumber}\n`, requestOptions)
         .then(response => response.text())
         .then(result => {
           console.log(result);
@@ -50,7 +68,7 @@ class Webcamframe extends Component {
       redirect: 'follow'
     };
 
-    fetch("https://attendy-geofi.herokuapp.com/lesson/status?subjectName=Entrepreneurial%20Leadership&lessonName=class%201&status=finished", requestOptions)
+    fetch(`https://attendy-geofi.herokuapp.com/lesson/status?subjectName=Entrepreneurial%20Leadership&lessonName=class%${this.state.currentLessonNumber}&status=finished`, requestOptions)
       .then(response => response.text())
       .then(result => {
         console.log(result);
@@ -62,8 +80,9 @@ class Webcamframe extends Component {
   render(){
     const { date } = this.props.location.state
     const { lessonName } = this.props.location.state
+    const { currentLessonNumber } = this.state.currentLessonNumber
 
-    var showWebcam = this.state.showWebcam ? <Webcamcom lessonName={lessonName}/> : '';
+    var showWebcam = this.state.showWebcam ? <Webcamcom currentLessonNumber={currentLessonNumber} lessonName={lessonName}/> : '';
     var showEndSessionBtn = this.state.showEndSession ?
       <div className="row">
         <div className="col btn-center">
@@ -86,6 +105,7 @@ class Webcamframe extends Component {
         <Navbar/>
         <div className="btn-center">
           <h1> { date } </h1>
+          { console.log(this.state.currentLessonNumber)}
         </div>
         { showWebcam }
         <br/>
