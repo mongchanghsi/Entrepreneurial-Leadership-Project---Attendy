@@ -184,21 +184,19 @@ class Webcamcom extends Component {
           <div className="col btn-center">
             <button className="btn btn-primary btn-lg" onClick={this.capture}> Run OCR </button>
           </div>
-        </div>
 
-        <div className="row">
           <div className="col btn-center">
             <button className="btn btn-primary btn-lg" onClick={this.changeStart}> Start Attendance </button>
           </div>
         </div>
 
+        <br/>
+
         <div className="row">
           <div className="col btn-center">
             <button className="btn btn-primary btn-lg" onClick={this.changeLate}> Late Attendance </button>
           </div>
-        </div>
 
-        <div className="row">
           <div className="col btn-center">
             <button className="btn btn-primary btn-lg" onClick={this.checkStatus}> check Status </button>
           </div>

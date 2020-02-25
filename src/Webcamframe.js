@@ -12,7 +12,7 @@ class Webcamframe extends Component {
       showWebcam: true,
       showEndSession: true,
       showCSV: false,
-      data: [],
+      data: []
     };
     this.endSession = this.endSession.bind(this);
   }
@@ -32,6 +32,11 @@ class Webcamframe extends Component {
           console.log(result);
           var data = JSON.parse(result);
           this.setState({ data: data.csvFormat});
+          console.log('this.state');
+          console.log(this.state);
+          console.log('this.state.data');
+          console.log(this.state.data[0]);
+          console.log(typeof(this.state.data));
         })
         .catch(error => console.log('error', error));
 
