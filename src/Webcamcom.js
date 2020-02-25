@@ -9,7 +9,12 @@ class Webcamcom extends Component {
   constructor(props){
     super(props);
 
-    this.state = {};
+    this.state = {
+      name: '',
+      userid: '',
+      lessonName: this.props.lessonName
+    };
+
     this.capture = this.capture.bind(this);
     this.changeLate = this.changeLate.bind(this);
     this.changeStart = this.changeStart.bind(this);

@@ -60,7 +60,10 @@ class Webcamframe extends Component {
   }
 
   render(){
-    var showWebcam = this.state.showWebcam ? <Webcamcom/> : '';
+    const { date } = this.props.location.state
+    const { lessonName } = this.props.location.state
+
+    var showWebcam = this.state.showWebcam ? <Webcamcom lessonName={lessonName}/> : '';
     var showEndSessionBtn = this.state.showEndSession ?
       <div className="row">
         <div className="col btn-center">
@@ -71,13 +74,19 @@ class Webcamframe extends Component {
     var showCSVBtn = this.state.showCSV ?
         <div className="row">
           <div className="col btn-center">
-            {this.state.data.length ? <CSVLink data={this.state.data} headers={this.state.headers} className="btn btn-primary">Download Attendance List</CSVLink> : null}
+            <h3> The Session has ended </h3>
+            <h5> The attandance sheet is available for download below. </h5>
+            <br/>
+            {this.state.data.length ? <CSVLink data={this.state.data} headers={this.state.headers} className="btn btn-primary" filename={`attendance_sheet_${date}.csv`}>Download Attendance List</CSVLink> : null}
           </div>
         </div> : '';
 
     return(
       <div>
         <Navbar/>
+        <div className="btn-center">
+          <h1> { date } </h1>
+        </div>
         { showWebcam }
         <br/>
         { showEndSessionBtn }
