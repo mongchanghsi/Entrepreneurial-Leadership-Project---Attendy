@@ -23,6 +23,17 @@ class Webcamcom extends Component {
     this.webcam = webcam;
   };
 
+
+  // componentDidMount(){
+  //   const lessonName = this.props.lessonName;
+  //   const currentLessonNumber = this.props.currentLessonNumber
+  //   this.setState({ lessonName: lessonName})
+  //   this.setState({ currentLessonNumber: currentLessonNumber})
+  //   console.log('this is from the webcamcom')
+  //   console.log(this.state.currentLessonNumber)
+  //   console.log('this is the end')
+  // }
+
   capture() {
     const imgSrc = this.webcam.getScreenshot();
     const img = document.getElementById('imageele');
@@ -73,7 +84,16 @@ class Webcamcom extends Component {
 
       let cTxt = txtName + txtID;
 
-      document.getElementById("ocr_results").innerText = cTxt;
+      let sTN = txtName.toString();
+      let sTI = txtID.toString();
+
+      console.log(sTN);
+      console.log(sTI);
+      console.log(typeof sTN);
+      console.log(typeof sTI);
+
+      // document.getElementById("ocr_results").innerText = cTxt;
+      document.getElementById("ocr_results").innerText = `Attendance Taken Successfully for ${sTI}`
       document.getElementById("ocr_status").innerText = 'Completed';
       await worker.terminate();
 
@@ -85,8 +105,8 @@ class Webcamcom extends Component {
       var myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/json");
 
-      var raw = JSON.stringify({    "userName": txtName,
-                                    "berkeleyId": txtID,
+      var raw = JSON.stringify({    "userName": sTN,
+                                    "berkeleyId": sTI,
                                     "subjectName": "Entrepreneurial Leadership",
                                     "lessonName": `${this.state.lessonName}`});
 
@@ -97,6 +117,7 @@ class Webcamcom extends Component {
         redirect: 'follow'
       };
 
+
       // everytime when clicking the Run OCR, it will post the attendance to the back-end
       fetch("https://attendy-geofi.herokuapp.com/attendance/submission", requestOptions)
         .then(response => response.text())
@@ -106,6 +127,7 @@ class Webcamcom extends Component {
         })
         .catch(error => console.log('error', error));
     })();
+
   };
 
   // changing the status to active / punctual, so that the subsequent entry are considered punctual
@@ -197,7 +219,7 @@ class Webcamcom extends Component {
           <div className="col-2">
           </div>
           <div className="col-4 btn-center">
-            <h4> Scanning Output </h4>
+            <h4> Attendance Status </h4>
           </div>
         </div>
 
