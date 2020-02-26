@@ -10,8 +10,8 @@ class Webcamcom extends Component {
     super(props);
 
     this.state = {
-      lessonName:'',
-      currentLessonNumber:''
+      lessonName: this.props.lessonName,
+      lessonNumber: this.props.lessonNumber
     };
     this.capture = this.capture.bind(this);
     this.changeLate = this.changeLate.bind(this);
@@ -24,15 +24,15 @@ class Webcamcom extends Component {
   };
 
 
-  componentDidMount(){
-    const lessonName = this.props.lessonName;
-    const currentLessonNumber = this.props.currentLessonNumber
-    this.setState({ lessonName: lessonName})
-    this.setState({ currentLessonNumber: currentLessonNumber})
-    console.log('this is from the webcamcom')
-    console.log(this.state.currentLessonNumber)
-    console.log('this is the end')
-  }
+  // componentDidMount(){
+  //   const lessonName = this.props.lessonName;
+  //   const currentLessonNumber = this.props.currentLessonNumber
+  //   this.setState({ lessonName: lessonName})
+  //   this.setState({ currentLessonNumber: currentLessonNumber})
+  //   console.log('this is from the webcamcom')
+  //   console.log(this.state.currentLessonNumber)
+  //   console.log('this is the end')
+  // }
 
   capture() {
     const imgSrc = this.webcam.getScreenshot();
@@ -67,14 +67,18 @@ class Webcamcom extends Component {
         document.getElementById("ocr_results").innerText = "Unable to read result, please try again";
       }
 
+      console.log(txtID);
+      let final_text = txtID.toString().replace(/(\r\n|\n|\r)/gm,"");
+      console.log(final_text)
+
       var myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/json");
 
       var raw = JSON.stringify({    "userName": "",
-                                    "berkeleyId": txtID,
+                                    "berkeleyId": final_text,
                                     "subjectName": "Entrepreneurial Leadership",
-                                    "lessonName": "class 1"});
-      // console.log("raw", raw)
+                                    "lessonName": `${this.state.lessonName}`});
+      console.log("raw", raw)
 
       var requestOptions = {
         method: 'POST',
@@ -102,7 +106,7 @@ class Webcamcom extends Component {
       redirect: 'follow'
     };
 
-    fetch(`https://attendy-geofi.herokuapp.com/lesson/status?subjectName=Entrepreneurial%20Leadership&lessonName=class%201&status=punctual`, requestOptions)
+    fetch(`https://attendy-geofi.herokuapp.com/lesson/status?subjectName=Entrepreneurial%20Leadership&lessonName=class%${this.state.lessonNumber}&status=punctual`, requestOptions)
       .then(response => response.text())
       .then(result => {
         console.log(result);
@@ -119,7 +123,7 @@ class Webcamcom extends Component {
         redirect: 'follow'
       };
 
-      fetch(`https://attendy-geofi.herokuapp.com/lesson/status?subjectName=Entrepreneurial%20Leadership&lessonName=class%201&status=late`, requestOptions)
+      fetch(`https://attendy-geofi.herokuapp.com/lesson/status?subjectName=Entrepreneurial%20Leadership&lessonName=class%${this.state.lessonNumber}&status=late`, requestOptions)
         .then(response => response.text())
         .then(result => {
           console.log(result);
@@ -135,7 +139,7 @@ class Webcamcom extends Component {
       redirect: 'follow'
     };
 
-    fetch("https://attendy-geofi.herokuapp.com/lesson/search?name=class 1", requestOptions)
+    fetch(`https://attendy-geofi.herokuapp.com/lesson/search?name=${this.state.lessonName}`, requestOptions)
       .then(response => response.text())
       .then(result => console.log(result))
       .catch(error => console.log('error', error));

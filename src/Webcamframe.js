@@ -13,30 +13,30 @@ class Webcamframe extends Component {
       showEndSession: true,
       showCSV: false,
       data: [],
-      currentLessonNumber: '201',
+      date: props.location.state.date,
+      lessonName: props.location.state.lessonName,
+      lessonNumber: props.location.state.lessonNumber,
       headers: [
-        {label: "Name", key: "name"},
-        {label: "Student ID", key: "userId"},
-        {label: "Status", key: "status"}
-      ],
-      lessonNumber: {
-        "class 1": "201",
-        "class 2": "202",
-        "class 3": "203",
-        "class 4": "204",
-        "class 5": "205"
-      }
+        {label: "Entrepreneurial Leadership Attendance", key: "name"},
+        {label: "SID #", key: "userId"},
+        {label: `${props.location.state.date}`, key: "status"}
+      ]
 
     };
     this.endSession = this.endSession.bind(this);
   }
 
-  componentDidMount(){
-    const { lessonName } = this.props.location.state;
-    const currentLessonNumber = this.state.lessonNumber[lessonName]
-    console.log(lessonName)
-    console.log(currentLessonNumber)
-  }
+  // componentWillMount(){
+  //   // const { lessonName } = this.props.location.state;
+  //   const currentLessonNumber = this.state.lessonNumber[this.state.lessonName];
+  //   console.log('this is a test');
+  //   console.log(this.state.lessonName);
+  //   console.log(currentLessonNumber);
+  //   this.setState({ currentLessonNumber: currentLessonNumber });
+  //   console.log(this.state.currentLessonNumber);
+  //   console.log('this is the end');
+  //
+  // }
 
   endSession(){
     console.log('session has ended');
@@ -47,7 +47,7 @@ class Webcamframe extends Component {
         redirect: 'follow'
       };
 
-      fetch(`https://attendy-geofi.herokuapp.com/attendance/aggregate?lessonName=class%${this.state.currentLessonNumber}\n`, requestOptions)
+      fetch(`https://attendy-geofi.herokuapp.com/attendance/aggregate?lessonName=class%${this.state.lessonNumber}\n`, requestOptions)
         .then(response => response.text())
         .then(result => {
           console.log(result);
@@ -66,7 +66,7 @@ class Webcamframe extends Component {
       redirect: 'follow'
     };
 
-    fetch(`https://attendy-geofi.herokuapp.com/lesson/status?subjectName=Entrepreneurial%20Leadership&lessonName=class%${this.state.currentLessonNumber}&status=finished`, requestOptions)
+    fetch(`https://attendy-geofi.herokuapp.com/lesson/status?subjectName=Entrepreneurial%20Leadership&lessonName=class%${this.state.lessonNumber}&status=finished`, requestOptions)
       .then(response => response.text())
       .then(result => {
         console.log(result);
@@ -76,11 +76,7 @@ class Webcamframe extends Component {
   }
 
   render(){
-    const { date } = this.props.location.state
-    const { lessonName } = this.props.location.state
-    const currentLessonNumber = this.state.lessonNumber[lessonName]
-
-    var showWebcam = this.state.showWebcam ? <Webcamcom currentLessonNumber={currentLessonNumber} lessonName={lessonName}/> : '';
+    var showWebcam = this.state.showWebcam ? <Webcamcom lessonNumber={this.state.lessonNumber} lessonName={this.state.lessonName}/> : '';
     var showEndSessionBtn = this.state.showEndSession ?
       <div className="row">
         <div className="col btn-center">
@@ -94,7 +90,7 @@ class Webcamframe extends Component {
             <h3> The Session has ended </h3>
             <h5> The attandance sheet is available for download below. </h5>
             <br/>
-            {this.state.data.length ? <CSVLink data={this.state.data} headers={this.state.headers} className="btn btn-primary" filename={`attendance_sheet_${date}.csv`}>Download Attendance List</CSVLink> : null}
+            {this.state.data.length ? <CSVLink data={this.state.data} headers={this.state.headers} className="btn btn-primary" filename={`attendance_sheet_${this.state.date}.csv`}>Download Attendance List</CSVLink> : null}
           </div>
         </div> : '';
 
@@ -102,7 +98,7 @@ class Webcamframe extends Component {
       <div>
         <Navbar/>
         <div className="btn-center">
-          <h1> { date } </h1>
+          <h1> { this.state.date } </h1>
         </div>
         { showWebcam }
         <br/>
