@@ -96,7 +96,6 @@ class Webcamcom extends Component {
         })
         .catch(error => console.log('error', error));
     })();
-
   };
 
   // changing the status to active / punctual, so that the subsequent entry are considered punctual
@@ -111,7 +110,7 @@ class Webcamcom extends Component {
       .then(result => {
         console.log(result);
         console.log('successfully start the attendance');
-        document.getElementById("attendance_status").innerText = "Punctual"
+        document.getElementById("attendance_status").innerText = "Status: Punctual"
       })
       .catch(error => console.log('error', error));
   }
@@ -127,7 +126,7 @@ class Webcamcom extends Component {
         .then(response => response.text())
         .then(result => {
           console.log(result);
-          document.getElementById("attendance_status").innerText = "Late"
+          document.getElementById("attendance_status").innerText = "Status: Late"
         })
         .catch(error => console.log('error', error));
   }
