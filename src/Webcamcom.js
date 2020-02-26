@@ -23,17 +23,6 @@ class Webcamcom extends Component {
     this.webcam = webcam;
   };
 
-
-  // componentDidMount(){
-  //   const lessonName = this.props.lessonName;
-  //   const currentLessonNumber = this.props.currentLessonNumber
-  //   this.setState({ lessonName: lessonName})
-  //   this.setState({ currentLessonNumber: currentLessonNumber})
-  //   console.log('this is from the webcamcom')
-  //   console.log(this.state.currentLessonNumber)
-  //   console.log('this is the end')
-  // }
-
   capture() {
     const imgSrc = this.webcam.getScreenshot();
     const img = document.getElementById('imageele');
@@ -53,12 +42,38 @@ class Webcamcom extends Component {
       var txtName = new Array();
       var txtID = new Array();
       for ( var i = 0; i < lines.length; i++ ) {
+        let remS = lines[i].text.toString().replace(/[^\w\s]/gi, "");
+        let remSpace = remS.replace(/(\r\n|\n|\r)/gm, "");
+        if ( remSpace.match(/[a-zA-Z]+/g) ) {
+          let remNum = remSpace.replace(/[0-9]/g, "");
+          if (remNum.length > 7) {
+            if (remNum.match(/ext/gm)) {
+              console.log(remNum)
+            } else {
+              txtName.push(remNum)
+              console.log(remNum)
+            }
+          } else {
+            document.getElementById("ocr_status").innerText = "Error";
+            document.getElementById("ocr_results").innerText = "Unable to read result, please try again";
+          }
+        }
+
         if ( lines[i].text.match(/303/g) ) {
-          txtID.push(lines[i].text.replace(/^\\n/i,''))
+          let remWord = remSpace.replace(/[a-zA-Z]/g, "");
+          if (remWord.match(/^(303)([0-9]{7})$/g)) {
+            txtID.push(remWord)
+            console.log(remWord)
+          } else {
+            document.getElementById("ocr_status").innerText = "Error";
+            document.getElementById("ocr_results").innerText = "Unable to read result, please try again";
+          }
         }
       }
 
-      document.getElementById("ocr_results").innerText = txtID;
+      let cTxt = txtName + txtID;
+
+      document.getElementById("ocr_results").innerText = cTxt;
       document.getElementById("ocr_status").innerText = 'Completed';
       await worker.terminate();
 
@@ -67,18 +82,13 @@ class Webcamcom extends Component {
         document.getElementById("ocr_results").innerText = "Unable to read result, please try again";
       }
 
-      console.log(txtID);
-      let final_text = txtID.toString().replace(/(\r\n|\n|\r)/gm,"");
-      console.log(final_text)
-
       var myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/json");
 
-      var raw = JSON.stringify({    "userName": "",
-                                    "berkeleyId": final_text,
+      var raw = JSON.stringify({    "userName": txtName,
+                                    "berkeleyId": txtID,
                                     "subjectName": "Entrepreneurial Leadership",
                                     "lessonName": `${this.state.lessonName}`});
-      console.log("raw", raw)
 
       var requestOptions = {
         method: 'POST',
