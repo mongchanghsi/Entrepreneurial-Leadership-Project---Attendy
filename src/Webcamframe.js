@@ -13,6 +13,7 @@ class Webcamframe extends Component {
       showEndSession: true,
       showCSV: false,
       data: [],
+      currentLessonNumber: '201',
       headers: [
         {label: "Name", key: "name"},
         {label: "Student ID", key: "userId"},
@@ -24,8 +25,8 @@ class Webcamframe extends Component {
         "class 3": "203",
         "class 4": "204",
         "class 5": "205"
-      },
-      currentLessonNumber: ''
+      }
+
     };
     this.endSession = this.endSession.bind(this);
   }
@@ -33,11 +34,8 @@ class Webcamframe extends Component {
   componentDidMount(){
     const { lessonName } = this.props.location.state;
     const currentLessonNumber = this.state.lessonNumber[lessonName]
-    this.setState({ currentLessonNumber: currentLessonNumber })
-    console.log('this is from the webcamframe');
-    console.log(this.state.lessonNumber[lessonName])
-    console.log(this.state.currentLessonNumber);
-    console.log('end of the webcamframe')
+    console.log(lessonName)
+    console.log(currentLessonNumber)
   }
 
   endSession(){
@@ -80,7 +78,7 @@ class Webcamframe extends Component {
   render(){
     const { date } = this.props.location.state
     const { lessonName } = this.props.location.state
-    const { currentLessonNumber } = this.state.currentLessonNumber
+    const currentLessonNumber = this.state.lessonNumber[lessonName]
 
     var showWebcam = this.state.showWebcam ? <Webcamcom currentLessonNumber={currentLessonNumber} lessonName={lessonName}/> : '';
     var showEndSessionBtn = this.state.showEndSession ?
@@ -105,7 +103,6 @@ class Webcamframe extends Component {
         <Navbar/>
         <div className="btn-center">
           <h1> { date } </h1>
-          { console.log(this.state.currentLessonNumber)}
         </div>
         { showWebcam }
         <br/>

@@ -54,9 +54,8 @@ class Webcamcom extends Component {
       var txtID = new Array();
       for ( var i = 0; i < lines.length; i++ ) {
         if ( lines[i].text.match(/303/g) ) {
-          txtID.push(lines[i].text)
+          txtID.push(lines[i].text.replace(/^\\n/i,''))
         }
-        // if
       }
 
       document.getElementById("ocr_results").innerText = txtID;
@@ -71,11 +70,11 @@ class Webcamcom extends Component {
       var myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/json");
 
-      var raw = JSON.stringify({    "userName": " ",
+      var raw = JSON.stringify({    "userName": "",
                                     "berkeleyId": txtID,
                                     "subjectName": "Entrepreneurial Leadership",
-                                    "lessonName": `${this.state.lessonName}`});
-      console.log("raw", raw)
+                                    "lessonName": "class 1"});
+      // console.log("raw", raw)
 
       var requestOptions = {
         method: 'POST',
@@ -92,7 +91,6 @@ class Webcamcom extends Component {
           console.log('successfully taken attendance');
         })
         .catch(error => console.log('error', error));
-
     })();
 
   };
@@ -104,7 +102,7 @@ class Webcamcom extends Component {
       redirect: 'follow'
     };
 
-    fetch(`https://attendy-geofi.herokuapp.com/lesson/status?subjectName=Entrepreneurial%20Leadership&lessonName=class%${this.state.currentLessonNumber}&status=punctual`, requestOptions)
+    fetch(`https://attendy-geofi.herokuapp.com/lesson/status?subjectName=Entrepreneurial%20Leadership&lessonName=class%201&status=punctual`, requestOptions)
       .then(response => response.text())
       .then(result => {
         console.log(result);
@@ -121,7 +119,7 @@ class Webcamcom extends Component {
         redirect: 'follow'
       };
 
-      fetch(`https://attendy-geofi.herokuapp.com/lesson/status?subjectName=Entrepreneurial%20Leadership&lessonName=class%${this.state.currentLessonNumber}&status=late`, requestOptions)
+      fetch(`https://attendy-geofi.herokuapp.com/lesson/status?subjectName=Entrepreneurial%20Leadership&lessonName=class%201&status=late`, requestOptions)
         .then(response => response.text())
         .then(result => {
           console.log(result);
