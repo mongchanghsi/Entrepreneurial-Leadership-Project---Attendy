@@ -1,69 +1,85 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Entrepreneurial Leadership Class
 
-## Available Scripts
+### Team 8 - Pentagonia
 
-In the project directory, you can run:
+Team Members: Eric | Glenn | Kenzo Tan | Constance | Thiago
 
-### `npm start`
+#### Instructional Menu for Attendy
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+----------------------------------
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+In our team's Attendy product, we used Optical Character Recognition (OCR) technology which uses your very own laptop's webcam and scan the students' Cal1 Card and followed by a compiled Excel file to download for the entire attendance process.
 
-### `npm test`
+> Our product is accessible via  https://attendygeofi.herokuapp.com/
+>
+> Alternatively, you may also do a ``` npm start ``` and run the web-application on http://localhost:3000
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Here is our Technical Flow of the product:
 
-### `npm run build`
+![techflow](C:\Users\m_cha\Desktop\techflow.png)
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Here is our Instructional Guide for the product:
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+**Please note that the following journey will be you as an Professor / TA taking attendance.**
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+1. Open Google Chrome
+2. Head over to ``` https://attendygeofi.herokuapp.com/ ``` for the Attendy Software
 
-### `npm run eject`
+![login](C:\Users\m_cha\Desktop\attendy img\login.png)
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+3. On this page, the user has the option to login / signup / retrieve forgotten password
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+   The software ideally allows students to login and find out how much attendance did they hit for the course.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+   In this product, we will be focusing on the TA's usage of the software as it is the main focus of this project.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+![signup](C:\Users\m_cha\Desktop\attendy img\signup.png)
 
-## Learn More
+4. Students / TA / Professors will be able to sign up for a new account and the back-end system will automatically determines whether are you a Student / TA / Professor which will provide a variety of administrative permissions.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+5. Go back to the login page, and sign in with the dummy administrator account. Please do note that both username and password are **case-sensitive**.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+   > username: ADMIN
+   >
+   > password: 123
 
-### Code Splitting
+![select](C:\Users\m_cha\Desktop\attendy img\select.png)
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+6. In this page, you will be able to see all of the available classes which are attached to Entrepreneurial Leadership Class. Select the class that you would like to start to take attendance 
 
-### Analyzing the Bundle Size
+![beforestart](C:\Users\m_cha\Desktop\attendy img\beforestart.png)
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+7. In this page, 
 
-### Making a Progressive Web App
+   > ``` Start Attendance ``` allows you to start the marking attendance session. Any students who come over and take attendance will be automatically marked as *Punctual*
+   >
+   > ``` Late Attendance ``` allows you to switch the status of marking attendance to late once the class has started 10 minutes after the official time. Subsequent students who came over and take attendance will be automatically tagged as *Late*
+   >
+   > ``` Run OCR ``` will allow the system to take a snapshot of the Cal1 Card and run an algorithm to scan the card for ID.
+   >
+   > ``` End Session ``` allows you to close off the attendance totally and any students who did not come and take attendance during the course of the lesson will be automatically marked as *Absent*
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+![startscan](C:\Users\m_cha\Desktop\attendy img\startscan.png)
 
-### Advanced Configuration
+8. Firstly, click on ``` Start Attendance ``` button to initialize the session and the student will position their card on the webcam. You can see that "Status: Punctual" has appeared and it is to tell you the current status of the marking attendance. If you were to click on ``` Late Attendance ``` the Status will change to Late.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
+   The screen tagged with Video Input allows student to see the positioning of the card. Next, once the card is position nicely, student can press on ``` Run OCR ``` to initialize the marking attendance process.
 
-### Deployment
+![endscan](C:\Users\m_cha\Desktop\attendy img\endscan.png)
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
+9. After the scanning is completed by the system in about 2 - 3 seconds, the system will show a confirmation text saying that "Attendance Taken Successfully (Student ID)"
+10. After the end of the lesson, you can end the attendance marking session via clicking on the ``` End Session ``` button.
 
-### `npm run build` fails to minify
+![endsess](C:\Users\m_cha\Desktop\attendy img\endsess.png)
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
-# Entrepreneurial-Leadership-Project---Attendy
+11. The system will automatically generate an Excel sheet ready for you to download to consolidate all the attendance together. All students that did not came over to mark attendance will be automatically tagged as *Absent*
+
+![excel](C:\Users\m_cha\Desktop\attendy img\excel.png)
+
+12. The excel sheet will be automatically compile all the students' name, student ID and their status into a format that you are currently using right now.
+
+​                                                                            
+
+-----------------------------
+
+​                                                                     End of Instructional 
