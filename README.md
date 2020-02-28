@@ -16,7 +16,7 @@ In our team's Attendy product, we used Optical Character Recognition (OCR) techn
 
 Here is our Technical Flow of the product:
 
-![techflow](C:\Users\m_cha\Desktop\techflow.png)
+![](readmeimg/techflow.png)
 
 Here is our Instructional Guide for the product:
 
@@ -25,7 +25,7 @@ Here is our Instructional Guide for the product:
 1. Open Google Chrome
 2. Head over to ``` https://attendygeofi.herokuapp.com/ ``` for the Attendy Software
 
-![login](C:\Users\m_cha\Desktop\attendy img\login.png)
+![](readmeimg/login.png)
 
 3. On this page, the user has the option to login / signup / retrieve forgotten password
 
@@ -33,7 +33,7 @@ Here is our Instructional Guide for the product:
 
    In this product, we will be focusing on the TA's usage of the software as it is the main focus of this project.
 
-![signup](C:\Users\m_cha\Desktop\attendy img\signup.png)
+![](readmeimg/signup.png)
 
 4. Students / TA / Professors will be able to sign up for a new account and the back-end system will automatically determines whether are you a Student / TA / Professor which will provide a variety of administrative permissions.
 
@@ -43,11 +43,11 @@ Here is our Instructional Guide for the product:
    >
    > password: 123
 
-![select](C:\Users\m_cha\Desktop\attendy img\select.png)
+![](readmeimg/select.png)
 
 6. In this page, you will be able to see all of the available classes which are attached to Entrepreneurial Leadership Class. Select the class that you would like to start to take attendance 
 
-![beforestart](C:\Users\m_cha\Desktop\attendy img\beforestart.png)
+![](readmeimg/beforestart.png)
 
 7. In this page, 
 
@@ -59,22 +59,22 @@ Here is our Instructional Guide for the product:
    >
    > ``` End Session ``` allows you to close off the attendance totally and any students who did not come and take attendance during the course of the lesson will be automatically marked as *Absent*
 
-![startscan](C:\Users\m_cha\Desktop\attendy img\startscan.png)
+![](readmeimg/startscan.png)
 
 8. Firstly, click on ``` Start Attendance ``` button to initialize the session and the student will position their card on the webcam. You can see that "Status: Punctual" has appeared and it is to tell you the current status of the marking attendance. If you were to click on ``` Late Attendance ``` the Status will change to Late.
 
    The screen tagged with Video Input allows student to see the positioning of the card. Next, once the card is position nicely, student can press on ``` Run OCR ``` to initialize the marking attendance process.
 
-![endscan](C:\Users\m_cha\Desktop\attendy img\endscan.png)
+![](readmeimg/endscan.png)
 
 9. After the scanning is completed by the system in about 2 - 3 seconds, the system will show a confirmation text saying that "Attendance Taken Successfully (Student ID)"
 10. After the end of the lesson, you can end the attendance marking session via clicking on the ``` End Session ``` button.
 
-![endsess](C:\Users\m_cha\Desktop\attendy img\endsess.png)
+![](readmeimg/endsess.png)
 
 11. The system will automatically generate an Excel sheet ready for you to download to consolidate all the attendance together. All students that did not came over to mark attendance will be automatically tagged as *Absent*
 
-![excel](C:\Users\m_cha\Desktop\attendy img\excel.png)
+![](readmeimg/excel.png)
 
 12. The excel sheet will be automatically compile all the students' name, student ID and their status into a format that you are currently using right now.
 
